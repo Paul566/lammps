@@ -1,0 +1,182 @@
+LAMMPS (7 Aug 2019)
+# Fe3O4 -- finding lattice parameters
+# atom types: 1 -- Fe, 2 -- O
+# units real: mass = g/mole; dist = Angstroms; time = fs;
+# energy = Kcal/mole = 4184 J/mole
+
+units 		real
+dimension	3
+boundary	p p p
+atom_style	charge
+neigh_modify	delay 5
+neighbor	0.3 bin
+
+#---------------------Geometry of a unit cell------------------
+
+variable a equal 6.021
+variable b equal 6.021
+variable c equal 6.047
+
+variable alpha equal "120.144*PI/180"
+variable beta equal "90.000*PI/180"
+variable gamma equal "60.288*PI/180"
+
+variable a1x equal 0.0
+variable a1y equal $a
+variable a1y equal 6.021
+variable a1z equal 0.0
+
+variable a2x equal $(v_b * cos(v_alpha))
+variable a2x equal -3.0235955413929342939
+variable a2y equal $(v_b * cos(v_gamma))
+variable a2y equal 2.9842519521902914903
+variable a2z equal $(sqrt(v_b^2 - v_a2x^2 - v_a2y^2))
+variable a2z equal 4.266679187367762971
+
+variable a3x equal $c
+variable a3x equal 6.047
+variable a3y equal 0.0
+variable a3z equal 0.0
+
+lattice custom 1 	a1	${a1x} 	${a1y} 	${a1z} 		a2	${a2x} 	${a2y} 	${a2z} 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	${a1y} 	${a1z} 		a2	${a2x} 	${a2y} 	${a2z} 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	${a1z} 		a2	${a2x} 	${a2y} 	${a2z} 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	${a2x} 	${a2y} 	${a2z} 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	-3.02359554139293 	${a2y} 	${a2z} 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	-3.02359554139293 	2.98425195219029 	${a2z} 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	-3.02359554139293 	2.98425195219029 	4.26667918736776 		a3 	${a3x} 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	-3.02359554139293 	2.98425195219029 	4.26667918736776 		a3 	6.047 	${a3y} 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	-3.02359554139293 	2.98425195219029 	4.26667918736776 		a3 	6.047 	0 	${a3z} 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+lattice custom 1 	a1	0 	6.021 	0 		a2	-3.02359554139293 	2.98425195219029 	4.26667918736776 		a3 	6.047 	0 	0 		basis 	0.0	0	0.5 		basis	0.1261	0.2522	0.1262 		basis	0.5	0.5	0.5 		basis	0.5	0.5	0.0		basis	0.5	0	0.5 		basis	0.8739	0.7478	0.8739 		basis	0.2568	0.5135	0.2568 		basis	0.2585	0.9954	0.2585 		basis	0.2585	0.9954	0.737 		basis	0.263	0.4831	0.7415 		basis	0.737	0.5169	0.2585		basis	0.7415	0.0046	0.263		basis	0.7415	0.0046	0.7415		basis	0.7432	0.4865	0.7432
+Lattice spacing in x,y,z = 9.0706 9.00525 4.26668
+
+region 		domain 	block 0 $(3/9.0706*v_c) 0 $(3/9.00525*v_a) 0 4 units lattice
+region 		domain 	block 0 1.9999779507419572777 0 $(3/9.00525*v_a) 0 4 units lattice
+region 		domain 	block 0 1.9999779507419572777 0 2.0058299325393518231 0 4 units lattice
+create_box	2 domain
+Created orthogonal box = (0 0 0) to (18.141 18.063 17.0667)
+  2 by 1 by 1 MPI processor grid
+create_atoms	2 box 	basis 1 1 basis 2 1 basis 3 1 	basis 4 1 basis 5 1 basis 6 1 	basis 7 2  basis 8 2  basis 9 2  basis 10 2 	basis 11 2 basis 12 2 basis 13 2 basis 14 2
+Created 504 atoms
+  create_atoms CPU = 0.000563021 secs
+mass	1 55.847
+mass 	2 15.9994
+
+#---------------Define potential and run minimization
+
+pair_style	reax/c	NULL
+pair_coeff	* *	ffield.reax.Fe_O_C_H Fe O
+Reading potential file ffield.reax.Fe_O_C_H with DATE: 2011-02-18
+fix             2 all qeq/reax 1 0.0 10.0 1e-6 reax/c
+
+compute	  	T all temp
+fix 		1 all box/relax iso 0.0 vmax 0.001
+thermo		10
+thermo_style custom step pe lx ly lz press
+dump		1 all custom 50 dump id type x y z
+minimize 	1.0e-18 1e-18 5000 100000
+WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (../min.cpp:168)
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 10.3
+  ghost atom cutoff = 10.3
+  binsize = 5.15, bins = 4 4 4
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reax/c, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: half/ghost/bin/3d/newtoff
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off, ghost
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 83.78 | 83.78 | 83.78 Mbytes
+Step PotEng Lx Ly Lz Press 
+       0   -57641.304    18.140991    18.063004    17.066717    -33799.17 
+      10   -57704.936    17.959581    17.882374     16.89605   -16949.575 
+      20   -57731.277    17.778171    17.701744    16.725382   -3571.6178 
+      30   -57783.473    17.705607    17.629492    16.657116    2526.1765 
+      40   -57799.185    17.778171    17.701744    16.725382   -119.13792 
+      50   -57823.723    17.778171    17.701744    16.725382    1192.8052 
+      60   -57845.742    17.814453     17.73787    16.759516   -60.056782 
+      70   -57882.711    17.850735    17.773996    16.793649   -877.51635 
+      80   -57902.088    17.850735    17.773996    16.793649    120.97693 
+      90   -57922.122    17.850735    17.773996    16.793649    1181.3493 
+     100   -57971.779    17.887017    17.810122    16.827783    802.54082 
+     110   -57998.429    17.923299    17.846248    16.861916   -951.20308 
+     120   -58018.757    17.923299    17.846248    16.861916    184.26722 
+     130    -58037.57    17.923299    17.846248    16.861916    1273.1622 
+     140   -58069.026    17.950511    17.873342    16.887516    617.21945 
+     150   -58099.978    17.986793    17.909468     16.92165   -900.24181 
+     160   -58124.283    17.986793    17.909468     16.92165    661.31074 
+     170   -58146.682    18.023075    17.945594    16.955783   -1326.1692 
+     180    -58166.11    18.023075    17.945594    16.955783    12.977481 
+     190   -58207.718    18.059357     17.98172    16.989917    -448.4527 
+     200   -58226.562    18.059357     17.98172    16.989917    1035.0679 
+     210   -58247.476    18.086568    18.008815    17.015517     91.39512 
+     220   -58270.966     18.12285    18.044941     17.04965   -1401.1614 
+     230   -58290.426     18.12285    18.044941     17.04965    370.27201 
+     240    -58352.14    18.159132    18.081067    17.083783    3283.9501 
+     250   -58394.841    18.250717    18.172258    17.169945   -342.40724 
+     260   -58522.771    18.393832    18.314758    17.304585    13975.442 
+     270   -58536.455    18.552879    18.473121    17.454214    207.31028 
+     280   -58539.301    18.548567    18.468828    17.450157     1375.051 
+     290   -58539.337    18.560387    18.480597    17.461277    411.72695 
+     295   -58539.337    18.560387    18.480597    17.461277    411.33241 
+Loop time of 198.325 on 2 procs for 295 steps with 504 atoms
+
+87.7% CPU use with 2 MPI tasks x no OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+        -57641.3039773     -58539.3376512     -58539.3372607
+  Force two-norm initial, final = 8283.75 140.266
+  Force max component initial, final = 8269.97 105.352
+  Final line search alpha, max atom move = 5.66642e-13 5.96969e-11
+  Iterations, force evaluations = 295 1022
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 135.22     | 153.3      | 171.38     | 146.0 | 77.30
+Neigh   | 0.37585    | 0.37622    | 0.3766     |   0.1 |  0.19
+Comm    | 0.40168    | 18.487     | 36.573     | 420.6 |  9.32
+Output  | 0.0065183  | 0.0079962  | 0.0094741  |   1.7 |  0.00
+Modify  | 25.946     | 25.954     | 25.963     |   0.2 | 13.09
+Other   |            | 0.1981     |            |       |  0.10
+
+Nlocal:    252 ave 255 max 249 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+Nghost:    3317 ave 3320 max 3314 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+Neighs:    82342.5 ave 83307 max 81378 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+
+Total # of neighbors = 164685
+Ave neighs/atom = 326.756
+Neighbor list builds = 13
+Dangerous builds = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Please see the log.cite file for references relevant to this simulation
+
+Total wall time: 0:03:19
