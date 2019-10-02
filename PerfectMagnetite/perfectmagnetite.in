@@ -51,7 +51,7 @@ lattice custom 1 &
 	basis	0.7415	0.0046	0.7415	&
 	basis	0.7432	0.4865	0.7432
 
-region 		domain 	block 0 $(3/9.0706*v_c) 0 $(3/9.00525*v_a) 0 4 units lattice
+region 		domain 	block 0 $(5/9.0706*v_c) 0 $(5/9.00525*v_a) 0 8 units lattice
 create_box	2 domain  
 create_atoms	2 box &
 	basis 1 1 basis 2 1 basis 3 1 &
@@ -71,9 +71,9 @@ compute	  	T all temp
 fix 		1 all box/relax iso 0.0 vmax 0.001
 thermo		10
 thermo_style custom step pe lx ly lz press
-dump		1 all custom 50 dump id type x y z
+dump		1 all custom 10 dump id type x y z
 minimize 	1.0e-18 1e-18 5000 100000
-
+write_data magnetite.data
 
  
 

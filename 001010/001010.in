@@ -1,0 +1,82 @@
+# Fe3O4 -- [0, 0, 1][1, 0, 0] grain boundary
+# atom types: 1 -- Fe, 2 -- O
+# units real: mass = g/mole; dist = Angstroms; time = fs;
+# energy = Kcal/mole = 4184 J/mole
+
+units 		real
+dimension	3
+atom_style	charge
+neigh_modify	delay 5
+neighbor	0.3 bin
+
+#---------------------Geometry of the model------------------
+
+variable a equal 6.1602
+variable b equal 6.1877
+variable c equal 6.1868
+#variable phi equal 54.503
+
+region largeregion block -1000 1000 -1000 1000 -1000 1000 units box
+boundary	p p p
+create_box	2 largeregion 
+
+read_data	data333		add append	group grain1 shift 0 30 0
+read_data 	data333rot	add append	group grain2 shift 0 29 0
+
+region 		deleteregion1	block -2000 2000 -2000 2000 20 2000 units box
+region 		deleteregion2	block -2000 2000 -2000 2000 -2000 22 units box
+region 		del1	block $(3*v_c) 2000 -2000 2000 -2000 2000 
+region 		del2	block -2000 0 -2000 2000 -2000 2000 
+region 		del3	block -2000 2000 -2000 0 -2000 2000
+region 		del4	block -2000 2000 42.4 2000 -2000 2000
+region 		del5	block -2000 2000 -2000 2000 -2000 0
+region 		del6	block -2000 2000 -2000 2000 40 2000
+group 	deleteregion1	region deleteregion1
+group 	deleteregion2	region deleteregion2
+group	tobedeleted1	intersect grain1 deleteregion1
+group	tobedeleted2	intersect grain2 deleteregion2
+delete_atoms group tobedeleted1
+delete_atoms group tobedeleted2
+delete_atoms region del1
+delete_atoms region del2
+delete_atoms region del3
+delete_atoms region del4
+delete_atoms region del5
+delete_atoms region del6
+
+change_box	all x final 0 $(3*v_c) y final 0 42.4 z final 0 40 boundary p p s units box
+
+#---------------Define potential and run minimization
+
+pair_style	reax/c	NULL
+pair_coeff	* *	ffield.reax.Fe_O_C_H Fe O
+fix             2 all qeq/reax 1 0.0 10.0 1e-6 reax/c
+
+compute	  	T all temp
+fix 		1 all nve
+timestep 	1.0
+thermo		10
+thermo_style 	custom step pe c_T
+dump		1 all custom 50 dump id type x y z
+minimize 	1.0e-6 1e-6 1000 100000
+
+velocity	all create 1000 239239239
+fix 		3 all temp/rescale 10 1000 1000 1 1.0
+
+run 500
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
