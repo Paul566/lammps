@@ -4,11 +4,32 @@ import matplotlib.pyplot as plt
 def distance(xi, yi, zi, xf, yf, zf):
     return math.sqrt((xi - xf)**2 + (yi - yf)**2 + (zi - zf)**2)
 
-out = open("analysis1500", "w+")
-initial = open("initial1500.10", "r")
-final = open("final1500.10", "r")
+def realdistance(xi, yi, zi, xf, yf, zf):
+    global width, depth
+    #takes into account the possibility of a travel through the periodic boundary
+    r0 = distance(xi, yi, zi, xf, yf, zf)
+    if ((abs(xi - xf) < depth/2) and (abs(yi - yf) < width/2)):
+        return r0
+    if ((abs(xi - xf) >= depth/2) and (abs(yi - yf) < width/2)):
+        if distance(0, yi, zi, depth - abs(xi - xf), yf, zf) > 14:
+            print('1')
+        return distance(0, yi, zi, depth - abs(xi - xf), yf, zf)
+    if ((abs(xi - xf) < depth/2) and (abs(yi - yf) >= width/2)):
+        if distance(xi, 0, zi, xf, width - abs(yi - yf), zf) > 14:
+            print([xi, yi, zi, xf, yf, zf, r0])
+        return distance(xi, 0, zi, xf, width - abs(yi - yf), zf)
+    else:
+        return distance(0, 0, zi, depth - abs(xi - xf), width - abs(yi - yf), zf)
+        
+
+temp = 1100 #K
 simulationtime = 10 #ps
-temp = 1500 #K
+width = 42.4
+depth = 18.5604 #dimensions of the box
+
+out = open("analysis" + str(temp), "w+")
+initial = open("initial" + str(temp) + "." + str(simulationtime), "r")
+final = open("final" + str(temp) + "." + str(simulationtime), "r")
 
 #-------------------------header----------------------
 for i in range (2):
@@ -59,7 +80,7 @@ for i in range(n):
 avedisp = 0     #Angstroms
 threshold = 0
 for i in range (n):
-    displacement[i] = distance(xi[i], yi[i], zi[i], xf[i], yf[i], zf[i])
+    displacement[i] = realdistance(xi[i], yi[i], zi[i], xf[i], yf[i], zf[i])
     if types[i] == '1':
         displacementFe.append(displacement[i])
     if types[i] == '2':
@@ -85,7 +106,7 @@ out.close()
 #-------------------------distribution plot-----------------
 
 plt.subplot(311)
-plt.hist(displacement, 150, color = 'black')
+plt.hist(displacement, 100, color = 'black')
 plt.title("""Displacement hystogram:
           black - all, red - Fe, blue - O. \n temperature: """ + str(temp) +\
           " K; simulation time: " + str(simulationtime) + " ps")
