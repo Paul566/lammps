@@ -22,7 +22,7 @@ def realdistance(xi, yi, zi, xf, yf, zf):
         return distance(0, 0, zi, depth - abs(xi - xf), width - abs(yi - yf), zf)
         
 
-temp = 1100 #K
+temp = 900 #K
 simulationtime = 10 #ps
 width = 42.4
 depth = 18.5604 #dimensions of the box
