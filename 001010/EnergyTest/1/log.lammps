@@ -1,0 +1,219 @@
+LAMMPS (7 Aug 2019)
+# Fe3O4 -- [0, 1, 0][1, 0, 0] grain boundary
+# atom types: 1 -- Fe, 2 -- O
+# units real: mass = g/mole; dist = Angstroms; time = fs;
+# energy = Kcal/mole = 4184 J/mole
+
+units 		real
+dimension	3
+atom_style	charge
+neigh_modify	delay 5
+neighbor	0.3 bin
+
+#---------------------Geometry of the model------------------
+
+variable a equal 6.1602
+variable b equal 6.1877
+variable c equal 6.1868
+
+region box block 0 $(3*v_c) 0 42.4 0 40 units box
+region box block 0 18.560400000000001342 0 42.4 0 40 units box
+boundary	p p s
+create_box 2 box
+Created orthogonal box = (0 0 0) to (18.5604 42.4 40)
+  1 by 2 by 1 MPI processor grid
+
+read_data	coolannealedboundary.data	add append
+  orthogonal box = (0 0 -0.004) to (18.5604 42.4 42.0202)
+  1 by 2 by 1 MPI processor grid
+  reading atoms ...
+  2577 atoms
+  reading velocities ...
+  2577 velocities
+  read_data CPU = 0.0344974 secs
+
+region boundary block -1000 1000 -1000 1000 17 23
+group boundary region boundary
+289 atoms in group boundary
+
+#---------------Define potential and run minimization
+
+pair_style	reax/c	NULL
+pair_coeff	* *	ffield.reax.Fe_O_C_H Fe O
+Reading potential file ffield.reax.Fe_O_C_H with DATE: 2011-02-18
+fix             2 all qeq/reax 1 0.0 10.0 1e-6 reax/c
+
+compute	  	T all temp
+fix 		1 all nve
+thermo		10
+thermo_style 	custom etotal step dt
+
+velocity	all create 900 239239239
+#fix 		3 all temp/rescale 10 900 900 1 1.0
+
+timestep 	1.0
+run 1000
+Neighbor list info ...
+  update every 1 steps, delay 5 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 10.3
+  ghost atom cutoff = 10.3
+  binsize = 5.15, bins = 4 9 9
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reax/c, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: half/ghost/bin/3d/newtoff
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off, ghost
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 116.6 | 116.6 | 116.7 Mbytes
+TotEng Step Dt 
+  -292839.35        0            1 
+   -292832.4       10            1 
+  -292829.11       20            1 
+  -292832.33       30            1 
+  -292834.93       40            1 
+  -292833.33       50            1 
+  -292830.81       60            1 
+  -292829.88       70            1 
+  -292829.72       80            1 
+  -292830.07       90            1 
+  -292830.62      100            1 
+  -292830.55      110            1 
+  -292830.65      120            1 
+   -292830.9      130            1 
+  -292830.35      140            1 
+  -292830.14      150            1 
+  -292828.96      160            1 
+   -292829.7      170            1 
+  -292830.06      180            1 
+  -292829.95      190            1 
+  -292829.39      200            1 
+  -292829.74      210            1 
+  -292829.05      220            1 
+  -292828.69      230            1 
+  -292828.89      240            1 
+  -292829.35      250            1 
+  -292829.74      260            1 
+  -292829.43      270            1 
+   -292829.1      280            1 
+  -292828.84      290            1 
+  -292828.13      300            1 
+  -292828.24      310            1 
+  -292828.53      320            1 
+  -292828.73      330            1 
+  -292828.63      340            1 
+  -292828.82      350            1 
+  -292828.55      360            1 
+  -292829.73      370            1 
+  -292829.11      380            1 
+  -292829.04      390            1 
+  -292829.54      400            1 
+  -292829.63      410            1 
+  -292829.64      420            1 
+  -292830.04      430            1 
+  -292830.34      440            1 
+  -292830.06      450            1 
+   -292830.1      460            1 
+  -292830.41      470            1 
+  -292830.86      480            1 
+  -292830.48      490            1 
+  -292830.27      500            1 
+  -292830.85      510            1 
+   -292830.6      520            1 
+  -292829.79      530            1 
+  -292829.79      540            1 
+  -292829.94      550            1 
+  -292830.92      560            1 
+  -292831.18      570            1 
+  -292830.79      580            1 
+  -292830.63      590            1 
+  -292830.83      600            1 
+  -292830.83      610            1 
+  -292830.87      620            1 
+  -292830.38      630            1 
+  -292830.71      640            1 
+  -292831.16      650            1 
+  -292830.77      660            1 
+  -292830.49      670            1 
+  -292830.55      680            1 
+  -292830.41      690            1 
+     -292831      700            1 
+  -292830.62      710            1 
+  -292831.06      720            1 
+   -292831.2      730            1 
+  -292831.29      740            1 
+  -292831.45      750            1 
+  -292831.12      760            1 
+  -292830.41      770            1 
+  -292829.92      780            1 
+  -292830.35      790            1 
+  -292830.73      800            1 
+  -292831.28      810            1 
+  -292831.52      820            1 
+  -292831.54      830            1 
+  -292831.31      840            1 
+  -292831.21      850            1 
+  -292831.16      860            1 
+  -292831.28      870            1 
+  -292832.11      880            1 
+  -292832.64      890            1 
+  -292832.28      900            1 
+  -292832.06      910            1 
+  -292831.58      920            1 
+  -292831.83      930            1 
+  -292832.04      940            1 
+  -292832.34      950            1 
+  -292832.46      960            1 
+  -292831.99      970            1 
+  -292831.58      980            1 
+     -292832      990            1 
+  -292832.15     1000            1 
+Loop time of 2904.56 on 2 procs for 1000 steps with 2577 atoms
+
+Performance: 0.030 ns/day, 806.822 hours/ns, 0.344 timesteps/s
+20.7% CPU use with 2 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 2096.9     | 2124.2     | 2151.6     |  59.4 | 73.13
+Neigh   | 28.483     | 28.512     | 28.54      |   0.5 |  0.98
+Comm    | 57.462     | 83.213     | 108.96     | 282.3 |  2.86
+Output  | 1.2467     | 1.5119     | 1.7771     |  21.6 |  0.05
+Modify  | 663.1      | 663.38     | 663.65     |   1.1 | 22.84
+Other   |            | 3.712      |            |       |  0.13
+
+Nlocal:    1288.5 ave 1292 max 1285 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+Nghost:    4072 ave 4083 max 4061 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+Neighs:    288252 ave 289193 max 287311 min
+Histogram: 1 0 0 0 0 0 0 0 0 1
+
+Total # of neighbors = 576504
+Ave neighs/atom = 223.711
+Neighbor list builds = 128
+Dangerous builds = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Please see the log.cite file for references relevant to this simulation
+
+Total wall time: 0:48:26
