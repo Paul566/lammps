@@ -1,0 +1,91 @@
+# Fe3O4 -- finding lattice parameters
+# atom types: 1 -- Fe, 2 -- O
+# units real: mass = g/mole; dist = Angstroms; time = fs;
+# energy = Kcal/mole = 4184 J/mole
+
+units 		real
+dimension	3
+boundary	p p p
+atom_style	charge
+neigh_modify	delay 5
+neighbor	0.3 bin
+
+#---------------------Geometry of a unit cell------------------
+
+variable a equal 6.021
+variable b equal 6.021
+variable c equal 6.047
+
+variable alpha equal "120.144*PI/180"
+variable beta equal "90.000*PI/180"
+variable gamma equal "60.288*PI/180"
+
+variable a1x equal 0.0
+variable a1y equal $a
+variable a1z equal 0.0
+
+variable a2x equal $(v_b * cos(v_alpha))
+variable a2y equal $(v_b * cos(v_gamma))
+variable a2z equal $(sqrt(v_b^2 - v_a2x^2 - v_a2y^2))
+
+variable a3x equal $c
+variable a3y equal 0.0
+variable a3z equal 0.0
+
+lattice custom 1 &
+	a1	${a1x} 	${a1y} 	${a1z} 	&
+	a2	${a2x} 	${a2y} 	${a2z} 	&
+	a3 	${a3x} 	${a3y} 	${a3z} 	&
+	basis 	0.0	0	0.5 	&
+	basis	0.1261	0.2522	0.1262 	& 
+	basis	0.5	0.5	0.5 	&
+	basis	0.5	0.5	0.0	&
+	basis	0.5	0	0.5 	&
+	basis	0.8739	0.7478	0.8739 	&
+	basis	0.2568	0.5135	0.2568 	&
+	basis	0.2585	0.9954	0.2585 	&
+	basis	0.2585	0.9954	0.737 	&
+	basis	0.263	0.4831	0.7415 	&
+	basis	0.737	0.5169	0.2585	&
+	basis	0.7415	0.0046	0.263	&
+	basis	0.7415	0.0046	0.7415	&
+	basis	0.7432	0.4865	0.7432
+
+region 		domain 	block 0 $(5/9.0706*v_c) 0 $(5/9.00525*v_a) 0 8 units lattice
+create_box	2 domain  
+create_atoms	2 box &
+	basis 1 1 basis 2 1 basis 3 1 &
+	basis 4 1 basis 5 1 basis 6 1 &
+	basis 7 2  basis 8 2  basis 9 2  basis 10 2 &
+	basis 11 2 basis 12 2 basis 13 2 basis 14 2
+mass	1 55.847
+mass 	2 15.9994
+
+#---------------Define potential and run minimization
+
+pair_style	reax/c	NULL
+pair_coeff	* *	ffield.reax.Fe_O_C_H Fe O
+fix             2 all qeq/reax 1 0.0 10.0 1e-6 reax/c
+
+compute	  	T all temp
+fix 		1 all box/relax iso 0.0 vmax 0.001
+thermo		10
+thermo_style custom step pe lx ly lz press
+dump		1 all custom 10 dump id type x y z
+minimize 	1.0e-18 1e-18 5000 100000
+write_data magnetite.data
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
